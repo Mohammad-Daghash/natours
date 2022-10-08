@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { ModuleFilenameHelpers } = require('webpack');
 
 const bookingSchema = new mongoose.Schema({
     tour: {
