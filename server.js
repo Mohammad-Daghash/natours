@@ -37,6 +37,13 @@ process.on('unhandledRejection', err => {
     });
 });
 
+process.on('SIGTERM', () => {
+    console.log('👋 SIGTERM RECEIVED. Shutting down gracefully');
+    server.close(() => {
+        console.log('💥 Process terminated!');
+    });
+});
+
 /* eslint max-len: ["error", { "ignoreComments": true }] */
 // EsLint
 // npm i eslint prettier eslint-config-prettier eslint-plugin-prettier eslint-config-airbnb eslint-plugin-node eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react --save-dev
