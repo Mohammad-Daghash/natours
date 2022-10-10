@@ -8,6 +8,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+const cors = require('cors');
 // const nodeHtmlParser = require('node-html-parser');
 
 const AppError = require('./utils/appError');
@@ -27,6 +28,17 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 // 1) GLOBAL MIDDLEWARES
+// Implement CORS
+app.use(cors());
+// Access-Controll-Allow-Origin *
+// api.natours.com, front-end natours.com
+// app.use(cors({
+//     origin: 'https://www.natours.com',
+// }));
+
+app.options('*', cors());
+// app.options('api/v1/tours/:id', cors());
+
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -36,7 +48,7 @@ app.use(
         directives: {
             defaultSrc: ["'self'"],
             scriptSrc: ["'self'", 'https://js.stripe.com/v3'],
-            frameSrc: ["'self'", "https://js.stripe.com"]
+            frameSrc: ["'self'", 'https://js.stripe.com'],
         },
     })
 );
