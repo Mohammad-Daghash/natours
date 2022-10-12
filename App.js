@@ -50,7 +50,8 @@ app.use(
             defaultSrc: ["'self'"],
             scriptSrc: ["'self'", 'https:'],
             frameSrc: ["'self'", 'https:'],
-            imgSrc: ["'self'", 'https:']
+            imgSrc: ["'self'", 'https:'],
+            connectSrc: ["'self'", 'https:'],
         },
     })
 );
