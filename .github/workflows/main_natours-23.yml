@@ -3,9 +3,6 @@
 
 name: Build and deploy Node.js app to Azure Web App - natours-23
 
-env:
-  NEXT_PUBLIC_API_URI: $
-
 on:
   push:
     branches:
@@ -27,7 +24,7 @@ jobs:
       - name: npm install, build, and test
         run: |
           npm install --production
-          npm start
+          npm SET NODE_ENV=production& nodemon server.js
           npm run build --if-present
           npm run test --if-present
 
