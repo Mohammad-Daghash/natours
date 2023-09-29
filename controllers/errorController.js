@@ -29,7 +29,7 @@ const handleTokenExpiredError = () =>
 const sendErrorDev = (err, req, res) => {
     // A) API
     if (req.originalUrl.startsWith('/api')) {
-        res.status(err.statusCode).json({
+        return res.status(err.statusCode).json({
             status: err.status,
             error: err,
             message: err.message,
@@ -37,7 +37,7 @@ const sendErrorDev = (err, req, res) => {
         });
     }
     // B) RENDERED WEBSITE
-    res.status(err.statusCode).render('error', {
+    return res.status(err.statusCode).render('error', {
         title: 'Something went wrong!',
         msg: err.message,
     });
@@ -48,7 +48,7 @@ const sendErrorProd = (err, req, res) => {
     if (req.originalUrl.startsWith('/api')) {
         // Operational, trusted error: send message to client
         if (err.isOperational) {
-            res.status(err.statusCode).json({
+            return res.status(err.statusCode).json({
                 status: err.status,
                 message: err.message,
             });
@@ -58,7 +58,7 @@ const sendErrorProd = (err, req, res) => {
         console.error('Error 💥', err);
 
         // Send generic message
-        res.status(500).json({
+        return res.status(500).json({
             status: 'error',
             message: 'Something went very wrong!',
         });
@@ -66,7 +66,7 @@ const sendErrorProd = (err, req, res) => {
         // B) RENDERED WEBSITE
         // Operational, trusted error: send message to client
         if (err.isOperational) {
-            res.status(err.statusCode).render('error', {
+            return res.status(err.statusCode).render('error', {
                 title: 'Something went wrong!',
                 msg: err.message,
             });
@@ -76,7 +76,7 @@ const sendErrorProd = (err, req, res) => {
         console.error('Error 💥', err);
 
         // Send generic message
-        res.status(err.statusCode).render('error', {
+        return res.status(err.statusCode).render('error', {
             title: 'Something went wrong!',
             msg: 'Please try again later.',
         });
